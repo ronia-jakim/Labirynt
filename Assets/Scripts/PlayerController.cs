@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     private bool groundedPlayer;
     private float jumpHeight = 2.0f;
 
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundMask;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -22,9 +25,8 @@ public class PlayerController : MonoBehaviour
     }
 
     void PlayerMove() {
-        groundedPlayer = characterController.isGrounded;
-
-        Debug.Log(characterController.isGrounded);
+        RaycastHit hit;
+        groundedPlayer = Physics.Raycast(groundCheck.position, transform.TransformDirection(Vector3.down), out hit, 0.2f, groundMask);
 
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
@@ -39,7 +41,20 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetButtonDown("Jump")) {
                 velocity.y += Mathf.Sqrt(jumpHeight * -3.0f * -9.81f);
-                Debug.Log("jump");
+            }
+
+            string terrainType = hit.collider.gameObject.tag;
+
+            switch (terrainType) {
+                case "Low":
+                    speed = 3;
+                    break;
+                case "High": 
+                    speed = 20;
+                    break;
+                default:
+                    speed = 12;
+                    break;
             }
         }
 
