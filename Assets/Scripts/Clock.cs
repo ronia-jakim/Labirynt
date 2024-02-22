@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Clock : PickUp
@@ -7,9 +5,14 @@ public class Clock : PickUp
     [SerializeField] private bool addTime;
     [SerializeField] private int time = 5;
 
-    // Update is called once per frame
-    void Update()
+    public override void Picked()
     {
-        
+        base.Picked();
+
+        int sign = -1;
+        if (addTime)
+            sign = 1;
+
+        GameManager.gameManager.AddTime(sign * time);
     }
 }
