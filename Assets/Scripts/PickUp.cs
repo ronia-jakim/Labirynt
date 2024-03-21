@@ -1,13 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PickUp : MonoBehaviour
 {
+    public bool xRotation = false;
+    public bool yRotation = false;
+    public bool zRotation = true;
+
+    private float xRot, yRot, zRot;
+
+    public float rotSpeed = 0.3f;
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (xRotation) xRot = 1.0f;
+        else xRot = 0.0f;
+
+        yRot = yRotation ? 1.0f : 0.0f;
+        zRot = zRotation ? 1.0f : 0.0f;
     }
 
     // Update is called once per frame
@@ -22,6 +34,8 @@ public class PickUp : MonoBehaviour
     }
 
     public void Rotation () {
-        transform.Rotate(new Vector3(0, 0, 1f));
+        Vector3 rot = new Vector3(xRot, yRot, zRot);
+        rot = rot * rotSpeed;
+        transform.Rotate(rot);
     }
 }

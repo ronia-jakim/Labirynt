@@ -23,6 +23,11 @@ public class Portal : MonoBehaviour
         portalTeleport.player = player.transform;
         portalTeleport.receiver = otherPortal.portalCollider;
 
+        portalCamera = myCamera.GetComponent<PortalCamera>();
+        portalCamera.playerCamera = player.GetComponentInChildren<Camera>().transform;
+        portalCamera.otherPortal = otherPortal.transform;
+        portalCamera.portal = transform;
+
         renderSurface.GetComponent<Renderer>().material = Instantiate(material);
         if (myCamera.targetTexture != null) {
             myCamera.targetTexture.Release();
