@@ -16,6 +16,12 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    public Material [] colorMaterials;
+
+    public void ColorLabyrinth () {
+
+    }
+
     private void GenerateTile (int x, int z) {
         Color pixelColor = map.GetPixel(x, z);
 
