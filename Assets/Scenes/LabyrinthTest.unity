@@ -349,6 +349,7 @@ MonoBehaviour:
   - color: {r: 1, g: 0.14509805, b: 0, a: 1}
     prefab: {fileID: 9130625948148415003, guid: 143c578d2a0607745a08c218bd044ac3, type: 3}
   offset: 5
+  colorMaterials: []
 --- !u!4 &1500151269
 Transform:
   m_ObjectHideFlags: 0

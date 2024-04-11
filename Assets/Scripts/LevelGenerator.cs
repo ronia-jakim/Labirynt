@@ -19,7 +19,12 @@ public class LevelGenerator : MonoBehaviour
     public Material [] colorMaterials;
 
     public void ColorLabyrinth () {
-
+        foreach (Transform child in transform) {
+            if (child.tag == "Wall") {
+                int picked = Random.Range(0, colorMaterials.Length);
+                child.gameObject.GetComponent<Renderer>().material = colorMaterials[picked];
+            }
+        }
     }
 
     private void GenerateTile (int x, int z) {
@@ -50,5 +55,6 @@ public class EditorButton : Editor {
 
         // dodajemy przycisk i sprawdzamy, czy zosta kliknięty
         if (GUILayout.Button("Create Labyrinth")) generator.GenerateLabyrinth();
+        if (GUILayout.Button("Color Labyrinth")) generator.ColorLabyrinth();
     }
 }
