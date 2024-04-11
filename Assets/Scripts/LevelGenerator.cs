@@ -22,8 +22,17 @@ public class LevelGenerator : MonoBehaviour
         foreach (Transform child in transform) {
             if (child.tag == "Wall") {
                 int picked = Random.Range(0, colorMaterials.Length);
-                child.gameObject.GetComponent<Renderer>().material = colorMaterials[picked];
+                foreach (Transform grandChild in child.transform) {
+                    // Renderer r = grandChild.GetComponent<Renderer>();
+                    if (grandChild.GetComponent<Renderer>() != null) grandChild.GetComponent<Renderer>().material = colorMaterials[picked];
+                }
             }
+        }
+    }
+
+    public void DeleteLabyrinth () {
+        for (int i = transform.childCount - 1; i >= 0; i--) {
+            DestroyImmediate(transform.GetChild(i).gameObject);
         }
     }
 
@@ -56,5 +65,6 @@ public class EditorButton : Editor {
         // dodajemy przycisk i sprawdzamy, czy zosta kliknięty
         if (GUILayout.Button("Create Labyrinth")) generator.GenerateLabyrinth();
         if (GUILayout.Button("Color Labyrinth")) generator.ColorLabyrinth();
+        if (GUILayout.Button("Delete Labyrinth")) generator.DeleteLabyrinth();
     }
 }
