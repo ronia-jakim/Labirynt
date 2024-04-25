@@ -53,18 +53,18 @@ public class LevelGenerator : MonoBehaviour
     }
 }
 
-[CustomEditor(typeof(LevelGenerator))]
-public class EditorButton : Editor {
-    public override void OnInspectorGUI()
-    {
-        // rysujemy defaultowy inspektor
-        DrawDefaultInspector();
+// [CustomEditor(typeof(LevelGenerator))]
+// public class EditorButton : Editor {
+//     public override void OnInspectorGUI()
+//     {
+//         // rysujemy defaultowy inspektor
+//         DrawDefaultInspector();
 
-        LevelGenerator generator = (LevelGenerator)target;
+//         LevelGenerator generator = (LevelGenerator)target;
 
-        // dodajemy przycisk i sprawdzamy, czy zosta kliknięty
-        if (GUILayout.Button("Create Labyrinth")) generator.GenerateLabyrinth();
-        if (GUILayout.Button("Color Labyrinth")) generator.ColorLabyrinth();
-        if (GUILayout.Button("Delete Labyrinth")) generator.DeleteLabyrinth();
-    }
-}
+//         // dodajemy przycisk i sprawdzamy, czy zosta kliknięty
+//         if (GUILayout.Button("Create Labyrinth")) generator.GenerateLabyrinth();
+//         if (GUILayout.Button("Color Labyrinth")) generator.ColorLabyrinth();
+//         if (GUILayout.Button("Delete Labyrinth")) generator.DeleteLabyrinth();
+//     }
+// }

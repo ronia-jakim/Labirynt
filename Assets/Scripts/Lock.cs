@@ -15,8 +15,11 @@ public class Lock : MonoBehaviour
     }
 
     void Update () {
-        if (iCanOpen && !locked && Input.GetKeyDown(KeyCode.E)) {
-            key.SetBool("UseKey", CheckTheKey());
+        if (iCanOpen && !locked) {
+            bool checkKey = CheckTheKey();
+            if(Input.GetKeyDown(KeyCode.E)) key.SetBool("UseKey", checkKey);
+
+            if (checkKey) GameManager.gameManager.infoText.text = "Press E to open the door";
         }
     }
 
@@ -31,6 +34,7 @@ public class Lock : MonoBehaviour
         if (other.tag == "Player") {
             iCanOpen = false;
             Debug.Log("Nie możesz już używać zamka");
+            GameManager.gameManager.infoText.text = "";
         }
     }
 

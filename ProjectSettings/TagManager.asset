@@ -8,6 +8,7 @@ TagManager:
   - High
   - PickUp
   - Wall
+  - WinPlace
   layers:
   - Default
   - TransparentFX
