@@ -9,6 +9,8 @@ public class PickUp : MonoBehaviour
     public bool yRotation = false;
     public bool zRotation = true;
 
+    public AudioClip pickClip;
+
     private float xRot, yRot, zRot;
 
     public float rotSpeed = 0.3f;
@@ -31,6 +33,7 @@ public class PickUp : MonoBehaviour
     public virtual void Picked() {
         Debug.Log("Podniosłem");
         Destroy(this.gameObject);
+        GameManager.gameManager.PlayClip(pickClip);
     }
 
     public void Rotation () {

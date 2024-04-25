@@ -1,10 +1,15 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
     [SerializeField] private int timeToEnd;
+
+    public PostProcessProfile normalProfile;
+    public PostProcessProfile lessTime;
+    public PostProcessVolume volume;
 
     private bool gamePaused = false;
 
@@ -17,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     public int points = 0;
 
+    private AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +31,22 @@ public class GameManager : MonoBehaviour
             gameManager = this;
 
         InvokeRepeating("Stopper", 2, 1);
+
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    [SerializeField]
+    AudioClip resumeClip;
+    [SerializeField]
+    AudioClip pauseClip;
+    [SerializeField]
+    AudioClip winClip;
+    [SerializeField]
+    AudioClip loseClip;
+
+    public void PlayClip (AudioClip playClip) {
+        audioSource.clip = playClip;
+        audioSource.Play();
     }
 
     // Update is called once per frame
@@ -35,10 +58,14 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         CancelInvoke("Stopper");
-        if (win) 
+        if (win){
             Debug.Log("Wygrałeś!");
-        else
+            PlayClip(winClip);
+        }
+        else {
             Debug.Log("Przegrałeś :<");
+            PlayClip(loseClip);
+        }
     }
 
     void Stopper()
@@ -52,6 +79,9 @@ public class GameManager : MonoBehaviour
             endGame = true;
         }
         if (endGame) EndGame();
+
+        if (timeToEnd < 10) LessTimeOn();
+        else LessTimeOff();
     }
 
     public void GamePause()
@@ -59,6 +89,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Gra jest zapauzowana");
         Time.timeScale = 0f;
         gamePaused = true;
+        PlayClip(pauseClip);
     }
 
     public void GameResume()
@@ -66,6 +97,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Gra została wznowiona");
         Time.timeScale = 1f;
         gamePaused = false;
+        PlayClip(resumeClip);
     }
 
     public void PauseCheck()
@@ -104,6 +136,13 @@ public class GameManager : MonoBehaviour
     public void AddTime(int time)
     {
         timeToEnd += time;
+    }
+
+    public void LessTimeOn () {
+        volume.profile = lessTime;
+    }
+    public void LessTimeOff () {
+        volume.profile = normalProfile;
     }
 
     public void FreezeTime(int f)
